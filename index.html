@@ -723,8 +723,10 @@ function doLogin(){
 }
 function logout(){
   currentUser=null; pinBuffer=''; updateDots();
-  document.getElementById('loginOverlay').classList.remove('hidden');
+  document.getElementById('loginOverlay').classList.add('hidden');
   document.getElementById('loginErr').textContent='';
+  CI.forEach(it=>{ selections[it.key]=null; noteTexts[it.key]=''; });
+  showPage('wall');
 }
 
 // ── BUILD CHECKIN ─────────────────────────────────────────
