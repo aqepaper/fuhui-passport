@@ -81,6 +81,13 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
   position:absolute;
   top:-5px;left:15px;
 }
+.wall-quote-title{
+  font-family:'Noto Serif TC',serif;
+  font-size:14px;font-weight:700;
+  color:var(--gold);
+  letter-spacing:4px;
+  margin-bottom:10px;
+}
 .wall-quote p{
   font-family:'Noto Serif TC',serif;
   font-size:17px;line-height:1.5;
@@ -232,6 +239,15 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 .adv-bfill{height:100%;background:#bbb;border-radius:3px;}
 .adv-val{font-size:14px;color:var(--ink-l);min-width:40px;text-align:right;font-weight:600;}
 
+/* VOW REF */
+.vow-ref{margin:0 16px 8px;border-radius:10px;overflow:hidden;border:1px solid var(--border);}
+.vow-ref-toggle{padding:10px 14px;background:var(--gold-p);cursor:pointer;font-family:'Noto Serif TC',serif;font-size:13px;color:var(--gold);font-weight:700;letter-spacing:1px;user-select:none;}
+.vow-ref-body{background:#fffdf5;padding:12px 14px;display:flex;flex-direction:column;gap:12px;}
+.vow-item{}
+.vow-title{font-family:'Noto Serif TC',serif;font-size:13px;font-weight:700;color:var(--ink-m);margin-bottom:5px;display:flex;align-items:center;gap:8px;}
+.vow-count{font-size:11px;background:var(--gold);color:#fff;padding:2px 8px;border-radius:10px;font-weight:600;letter-spacing:.5px;}
+.vow-text{font-family:'Noto Serif TC',serif;font-size:14px;color:var(--ink);line-height:2;letter-spacing:1px;}
+
 /* SUBMIT */
 .submit-wrap{padding:8px 16px 16px;flex-shrink:0;}
 .submit-btn{width:100%;border:none;border-radius:var(--r);padding:18px;font-family:'Noto Serif TC',serif;font-size:18px;letter-spacing:4px;cursor:pointer;transition:all .2s;background:#ccc;color:#fff;font-weight:700;}
@@ -282,7 +298,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
         <div class="group-ring-wrap">
           <svg width="116" height="116" viewBox="0 0 116 116">
             <circle cx="58" cy="58" r="46" fill="none" stroke="var(--border)" stroke-width="11"/>
-            <circle id="groupRingCircle" cx="58" cy="58" r="46" fill="none" stroke="var(--gold-l)" stroke-width="11" stroke-linecap="round" stroke-dasharray="289.0" stroke-dashoffset="289.0" transform="rotate(-90 58 58)" style="transition:stroke-dashoffset 1s ease"/>
+            <circle id="groupRingCircle" cx="58" cy="58" r="46" fill="none" stroke="#4a9e6b" stroke-width="11" stroke-linecap="round" stroke-dasharray="289.0" stroke-dashoffset="289.0" transform="rotate(-90 58 58)" style="transition:stroke-dashoffset 1s ease"/>
           </svg>
           <div class="group-ring-center">
             <div class="group-ring-pct" id="groupRingPct">—%</div>
@@ -291,7 +307,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
       </div>
       <!-- 引言 -->
       <div class="wall-quote" id="wallQuote" style="display:none">
-        <p>紀錄不是為了被看見，<br>而是把三環一體的修行理念，<br>放進可以被守護的形式之中。</p>
+        <p>紀錄不是為了被看見<br>而是把三環一體的修行理念<br>放進可以被守護的形式之中</p>
       </div>
       <!-- 個人卡片（由 JS 填入） -->
       <div id="wallCards"><div class="wall-loading">載入中…</div></div>
@@ -421,11 +437,11 @@ const WEEK = currentWeek();
 
 // ── ITEMS ─────────────────────────────────────────────────
 const CI = [
-  {key:'sutra',  icon:'📖',name:'誦經',    unit:'部',  wg:2,yg:108,note:false},
-  {key:'dharma', icon:'💬',name:'法語',    unit:'則',  wg:1,yg:40, note:true, ph:'落實於生活'},
-  {key:'vow',    icon:'🙏',name:'發願',    unit:'次',  wg:3,yg:108,note:false},
-  {key:'reflect',icon:'🪞',name:'反省',    unit:'次',  wg:3,yg:108,note:true, ph:'反省身口意三業'},
-  {key:'sit',    icon:'🧘',name:'自行靜坐',unit:'支香',wg:2,yg:84, note:false},
+  {key:'sutra',  icon:'📖',name:'誦經',      unit:'部',  wg:2,yg:108,note:false},
+  {key:'vow',    icon:'🙏',name:'發願',      unit:'次',  wg:2,yg:108,note:false},
+  {key:'dharma', icon:'💬',name:'甘露法語',  unit:'則',  wg:1,yg:40, note:true, ph:'記下編號、月刊期數或是心得'},
+  {key:'reflect',icon:'🪞',name:'反省檢討',  unit:'次',  wg:2,yg:108,note:true, ph:'紀錄反省檢討（以讀誦法語為標準）的身口意三業'},
+  {key:'sit',    icon:'🧘',name:'自行靜坐',  unit:'支香',wg:2,yg:84, note:false},
 ];
 const AI = [
   {key:'teaching',icon:'📖',name:'研讀老和尚開示',unit:'篇',  yg:12},
@@ -527,7 +543,7 @@ function renderWall(members){
   const circ=289,off=circ-Math.min(100,avg)/100*circ;
   const rc=document.getElementById('groupRingCircle');
   setTimeout(()=>rc.style.strokeDashoffset=off,80);
-  rc.style.stroke=avg>=100?'var(--green)':'var(--gold-l)';
+  rc.style.stroke=avg>=100?'#2e7d4f':'#4a9e6b';
   const rp=document.getElementById('groupRingPct');
   rp.textContent=avg+'%'; rp.className='group-ring-pct'+(avg>=100?' high':'');
   document.getElementById('groupStats').style.display='block';
@@ -739,6 +755,22 @@ function buildCheckin(){
         <button type="button" class="step-btn" onclick="step('${it.key}',+1)">＋</button>
       </div>
       ${it.note?`<div class="item-note"><textarea id="note_${it.key}" rows="2" placeholder="${it.ph}" oninput="noteTexts['${it.key}']=this.value"></textarea></div>`:''}
+      ${it.key==='vow'?`
+      <div class="vow-ref">
+        <div class="vow-ref-toggle" onclick="toggleVowRef(this)">
+          <span>發願參考 ▾</span>
+        </div>
+        <div class="vow-ref-body" style="display:none">
+          <div class="vow-item">
+            <div class="vow-title">四弘誓願 <span class="vow-count">三遍為一次</span></div>
+            <div class="vow-text">眾生無邊誓願度，煩惱無盡誓願斷，法門無量誓願學，佛道無上誓願成。</div>
+          </div>
+          <div class="vow-item">
+            <div class="vow-title">普賢菩薩十大願王 <span class="vow-count">一遍為一次</span></div>
+            <div class="vow-text">一者、禮敬諸佛；二者、稱讚如來；三者、廣修供養；四者、懺悔業障；五者、隨喜功德；六者、請轉法輪；七者、請佛住世；八者、常隨佛學；九者、恆順眾生；十者、普皆迴向。</div>
+          </div>
+        </div>
+      </div>`:''}
       <div class="item-fb">
         <div class="fb-msg" id="fb_${it.key}"></div>
         <div class="fb-accum" id="accum_${it.key}">本週累積：0 ${it.unit}</div>
@@ -762,6 +794,13 @@ function buildAdminItems(){
       <div class="adv-val">${got>0?got+' '+it.unit:'—'}</div>`;
     wrap.appendChild(div);
   });
+}
+
+function toggleVowRef(el){
+  const body=el.nextElementSibling;
+  const open=body.style.display==='none';
+  body.style.display=open?'block':'none';
+  el.querySelector('span').textContent=open?'發願參考 ▴':'發願參考 ▾';
 }
 
 // ── STEPPER ───────────────────────────────────────────────
