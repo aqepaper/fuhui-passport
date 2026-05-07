@@ -8,12 +8,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
 
 :root{
-  --gold:#c49a2e;    --gold-l:#d4aa4a;  --gold-p:#fdf3d8;
-  --ink:#1a1208;     --ink-m:#3d3220;   --ink-l:#6b5c3e;
-  --paper:#ffffff;   --paper-d:#fdf6e8;
+  --gold:#b38d28;    --gold-l:#c9a94a;  --gold-p:#fdf3d8;
+  --ink:#1c160f;     --ink-m:#3d3220;   --ink-l:#6b5c3e;
+  --paper:#ffffff;   --paper-d:#f8f4ed;
   --green:#2e7d4f;   --green-l:#e6f5ec;
-  --border:#c8b48a;  --red:#c0392b;
-  --shadow:0 3px 16px rgba(0,0,0,.12);
+  --border:#c8b48a;  --red:#a62c2b;  --zen-red:#a62c2b;
+  --shadow:0 2px 8px rgba(26,18,8,.06);
   --r:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -21,7 +21,7 @@ html,body{height:100%;overflow:hidden;}
 body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);max-width:600px;margin:0 auto;font-size:16px;}
 
 .app{width:100%;height:100vh;display:flex;flex-direction:column;background:var(--paper);overflow:hidden;}
-.page{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;flex-direction:column;}
+.page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
 .page.active{display:flex;}
 
 /* NAV */
@@ -33,22 +33,25 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 /* HEADER */
 .app-header{flex-shrink:0;background:var(--ink);padding:16px 18px 14px;border-bottom:3px solid var(--gold);}
 .header-row{display:flex;justify-content:space-between;align-items:center;}
-.app-title{font-family:'Noto Serif TC',serif;color:var(--gold-l);font-size:20px;letter-spacing:3px;font-weight:600;}
+.app-title{font-family:'Noto Serif TC',serif;color:var(--gold-l);font-size:20px;letter-spacing:3px;font-weight:700;text-shadow:0.5px 0.5px 0 rgba(255,255,255,.2);}
 .week-chip{background:var(--gold);color:#fff;font-size:13px;font-weight:600;padding:5px 14px;border-radius:20px;letter-spacing:1px;}
 
 /* MILESTONE */
-.ms-strip{flex-shrink:0;background:var(--paper-d);border-bottom:2px solid var(--border);padding:14px 16px;}
-.ms-title{font-size:13px;color:var(--ink-l);letter-spacing:2px;text-align:center;margin-bottom:12px;font-family:'Noto Serif TC',serif;}
-.ms-track{display:flex;align-items:center;}
-.ms-node{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:62px;}
-.ms-circle{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;transition:all .3s;}
-.ms-circle.done{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-p);}
-.ms-circle.cur{border-color:var(--gold);background:var(--gold-p);animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,154,46,.4);}50%{box-shadow:0 0 0 6px rgba(196,154,46,0);}}
-.ms-line{flex:1;height:3px;background:var(--border);}
-.ms-line.done{background:var(--gold);}
-.ms-lbl{font-size:11px;color:var(--ink-l);text-align:center;line-height:1.4;font-weight:500;}
-.ms-lbl.done{color:var(--gold);font-weight:700;}
+.ms-strip{flex-shrink:0;background:var(--ink);border-bottom:2px solid var(--gold);padding:8px 16px;}
+.ms-track{display:flex;align-items:center;justify-content:center;gap:6px;}
+.ms-badge{
+  display:flex;align-items:center;gap:5px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(212,170,74,.3);
+  border-radius:20px;padding:5px 10px;
+  font-family:'Noto Serif TC',serif;
+}
+.ms-badge.done{background:rgba(196,154,46,.2);border-color:var(--gold);}
+.ms-badge.cur{background:rgba(196,154,46,.15);border-color:var(--gold-l);animation:pulse 2s ease-in-out infinite;}
+.ms-icon{font-size:15px;line-height:1;}
+.ms-lbl{font-size:11px;color:var(--gold-p);opacity:.7;line-height:1.2;font-weight:500;}
+.ms-lbl.done{color:var(--gold-l);opacity:1;font-weight:700;}
+.ms-sep{width:16px;height:1px;background:rgba(212,170,74,.3);flex-shrink:0;}
 
 /* GROUP RING */
 .group-stats{flex-shrink:0;background:#fff;border-bottom:2px solid var(--border);padding:18px 16px 14px;}
@@ -60,14 +63,41 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 .group-ring-lbl{font-size:12px;color:var(--ink-l);letter-spacing:1px;font-weight:500;}
 
 /* QUOTE */
-.wall-quote{flex-shrink:0;background:var(--ink);padding:16px 24px;border-bottom:1px solid #3d3020;text-align:center;}
-.wall-quote p{font-family:'Noto Serif TC',serif;font-size:14px;line-height:2.2;color:var(--gold-p);letter-spacing:2px;}
+.wall-quote{
+  flex-shrink:0;
+  background:var(--gold-p);
+  background-image:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm42 63c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm35-26c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM9 81c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm68-23c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zM27 1c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm13 54c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z' fill='%23c8b48a' fill-opacity='0.15' fill-rule='evenodd'/%3E%3C/svg%3E");
+  padding:20px 24px;
+  border-bottom:2px solid var(--border);
+  text-align:center;
+  position:relative;
+}
+.wall-quote::before{
+  content:'"';
+  font-family:'Noto Serif TC',serif;
+  font-size:50px;
+  color:var(--gold-l);
+  opacity:.3;
+  position:absolute;
+  top:-5px;left:15px;
+}
+.wall-quote p{
+  font-family:'Noto Serif TC',serif;
+  font-size:17px;line-height:1.5;
+  color:var(--ink-m);
+  letter-spacing:2px;
+  position:relative;z-index:1;
+}
 
 /* MEMBER CARDS */
-.wall-scroll{flex:1;overflow-y:auto;padding:12px 12px 8px;background:var(--paper-d);}
-.mem-card{background:#fff;border:2px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:border-color .2s;}
-.mem-card:active{border-color:var(--gold);}
-.mem-head{background:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.wall-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--paper-d);overscroll-behavior:contain;}
+.wall-cards{padding:12px 12px 80px;}
+.wall-loading{text-align:center;padding:50px;color:var(--ink-l);font-family:'Noto Serif TC',serif;letter-spacing:1px;font-size:16px;}
+.app-header{background:var(--ink);padding:16px 18px 14px;border-bottom:3px solid var(--gold);}
+.group-stats{background:#fff;border-bottom:2px solid var(--border);padding:18px 16px 14px;}
+.mem-card{background:transparent;margin-bottom:10px;cursor:pointer;}
+.mem-card:active .mem-head{border-color:var(--gold);}
+.mem-head{background:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;border-radius:var(--r);border:2px solid var(--border);box-shadow:var(--shadow);transition:border-color .2s;}
 .mem-av{width:46px;height:46px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif TC',serif;font-size:18px;font-weight:700;flex-shrink:0;}
 .mem-info{flex:1;min-width:0;}
 .mem-name-row{display:flex;align-items:baseline;gap:10px;}
@@ -148,8 +178,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 /* ITEM CARDS */
 .checkin-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--paper-d);}
 .items-wrap{padding:12px 12px 4px;}
-.item-card{background:#fff;border:2px solid var(--border);border-radius:var(--r);margin-bottom:14px;overflow:hidden;box-shadow:var(--shadow);transition:border-color .25s;}
-.item-card.done-card{border-color:var(--green);border-width:3px;}
+.item-card{background:#fff;border:1px solid rgba(200,180,138,.4);border-radius:var(--r);margin-bottom:14px;overflow:hidden;box-shadow:0 2px 8px rgba(26,18,8,.05);transition:border-color .25s;}
+.item-card.done-card{border-color:var(--gold);border-width:2px;background:linear-gradient(to bottom right,#ffffff,var(--gold-p));}
 .item-top{padding:16px 16px 6px;display:flex;align-items:center;justify-content:space-between;}
 .item-left{display:flex;align-items:center;gap:12px;}
 .item-icon{width:44px;height:44px;border-radius:12px;background:var(--gold-p);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;transition:background .25s;}
@@ -173,7 +203,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 .step-btn:active{background:var(--gold-p);border-color:var(--gold);transform:scale(.94);}
 .step-btn:disabled{opacity:.2;cursor:not-allowed;}
 .step-display{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;}
-.step-num{font-family:'Noto Serif TC',serif;font-size:52px;font-weight:700;color:var(--border);line-height:1;transition:color .2s;}
+.step-num{font-family:'Noto Sans TC',sans-serif;font-size:52px;font-weight:700;color:var(--border);line-height:1;transition:color .2s;letter-spacing:-1px;}
 .step-num.has{color:var(--ink);}
 .step-num.done{color:var(--green);}
 .step-unit{font-size:13px;color:var(--ink-l);letter-spacing:1px;font-weight:600;}
@@ -238,41 +268,34 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 
   <!-- PAGE 1: 進度牆 -->
   <div id="pageWall" class="page active">
-    <div class="app-header">
-      <div class="header-row">
-        <div class="app-title">福慧學習護照</div>
-        <div class="week-chip" id="wallWeekChip">第 1 週</div>
-      </div>
-    </div>
-    <div class="ms-strip">
-      <div class="ms-title">年度里程碑</div>
-      <div class="ms-track">
-        <div class="ms-node"><div class="ms-circle" id="ms1">🌱</div><div class="ms-lbl" id="msl1">初心<br>第13週</div></div>
-        <div class="ms-line" id="msline1"></div>
-        <div class="ms-node"><div class="ms-circle" id="ms2">🌿</div><div class="ms-lbl" id="msl2">中道<br>第26週</div></div>
-        <div class="ms-line" id="msline2"></div>
-        <div class="ms-node"><div class="ms-circle" id="ms3">🌸</div><div class="ms-lbl" id="msl3">雙修<br>第39週</div></div>
-        <div class="ms-line" id="msline3"></div>
-        <div class="ms-node"><div class="ms-circle" id="ms4">🏆</div><div class="ms-lbl" id="msl4">圓滿<br>第52週</div></div>
-      </div>
-    </div>
-    <div class="group-stats" id="groupStats" style="display:none">
-      <div class="stats-title">全組總進度</div>
-      <div class="group-ring-wrap">
-        <svg width="116" height="116" viewBox="0 0 116 116">
-          <circle cx="58" cy="58" r="46" fill="none" stroke="var(--border)" stroke-width="11"/>
-          <circle id="groupRingCircle" cx="58" cy="58" r="46" fill="none" stroke="var(--gold-l)" stroke-width="11" stroke-linecap="round" stroke-dasharray="289.0" stroke-dashoffset="289.0" transform="rotate(-90 58 58)" style="transition:stroke-dashoffset 1s ease"/>
-        </svg>
-        <div class="group-ring-center">
-          <div class="group-ring-pct" id="groupRingPct">—%</div>
-          <div class="group-ring-lbl">全組累積</div>
+    <div class="wall-scroll" id="wallScroll">
+      <!-- 標題 -->
+      <div class="app-header">
+        <div class="header-row">
+          <div class="app-title">福慧學習護照</div>
+          <div class="week-chip" id="wallWeekChip">第 1 週</div>
         </div>
       </div>
+      <!-- 全組圓環 -->
+      <div class="group-stats" id="groupStats" style="display:none">
+        <div class="stats-title">全組總進度</div>
+        <div class="group-ring-wrap">
+          <svg width="116" height="116" viewBox="0 0 116 116">
+            <circle cx="58" cy="58" r="46" fill="none" stroke="var(--border)" stroke-width="11"/>
+            <circle id="groupRingCircle" cx="58" cy="58" r="46" fill="none" stroke="var(--gold-l)" stroke-width="11" stroke-linecap="round" stroke-dasharray="289.0" stroke-dashoffset="289.0" transform="rotate(-90 58 58)" style="transition:stroke-dashoffset 1s ease"/>
+          </svg>
+          <div class="group-ring-center">
+            <div class="group-ring-pct" id="groupRingPct">—%</div>
+          </div>
+        </div>
+      </div>
+      <!-- 引言 -->
+      <div class="wall-quote" id="wallQuote" style="display:none">
+        <p>紀錄不是為了被看見，<br>而是把三環一體的修行理念，<br>放進可以被守護的形式之中。</p>
+      </div>
+      <!-- 個人卡片（由 JS 填入） -->
+      <div id="wallCards"><div class="wall-loading">載入中…</div></div>
     </div>
-    <div class="wall-quote" id="wallQuote" style="display:none">
-      <p>紀錄不是為了被看見，<br>而是把每一次向善的信念，<br>放進可以被守護的形式之中。</p>
-    </div>
-    <div class="wall-scroll" id="wallScroll"><div class="wall-loading">載入中…</div></div>
   </div>
 
   <!-- PAGE 2: 個人詳細 -->
@@ -465,12 +488,6 @@ function showPage(p){
 // ── WALL ─────────────────────────────────────────────────
 function initWall(){
   document.getElementById('wallWeekChip').textContent='第 '+WEEK+' 週';
-  [[13,1],[26,2],[39,3],[52,4]].forEach(([wk,n])=>{
-    const el=document.getElementById('ms'+n),ll=document.getElementById('msl'+n);
-    if(WEEK>wk){el.classList.add('done');ll.classList.add('done');}
-    else if(WEEK>=wk-5) el.classList.add('cur');
-    if(n<4) document.getElementById('msline'+n).classList.toggle('done',WEEK>wk);
-  });
   loadWall();
 }
 
@@ -516,7 +533,8 @@ function renderWall(members){
   document.getElementById('groupStats').style.display='block';
   document.getElementById('wallQuote').style.display='block';
 
-  const scroll=document.getElementById('wallScroll'); scroll.innerHTML='';
+  const scroll=document.getElementById('wallCards'); scroll.innerHTML='';
+  const wrap=document.createElement('div'); wrap.style.cssText='padding:12px 12px 80px';
   members.forEach((m,idx)=>{
     const tot=m.totals||{},wt=m.weekTotals||{};
     const cp=cumPct(tot),wp=wkPct(wt),wb=Math.min(100,wp);
@@ -538,8 +556,9 @@ function renderWall(members){
         <div class="mem-arr">詳細 ›</div>
       </div>
     </div>`;
-    scroll.appendChild(card);
+    wrap.appendChild(card);
   });
+  scroll.appendChild(wrap);
 }
 
 // ── DETAIL ───────────────────────────────────────────────
