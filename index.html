@@ -279,20 +279,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 .login-box{background:#fff;border-radius:22px;padding:30px 24px;width:100%;max-width:340px;box-shadow:0 24px 64px rgba(0,0,0,.6);}
 .login-title{font-family:'Noto Serif TC',serif;font-size:20px;text-align:center;letter-spacing:2px;margin-bottom:8px;color:var(--ink);font-weight:700;}
 .login-sub{text-align:center;font-size:15px;color:var(--ink-l);margin-bottom:22px;letter-spacing:.5px;font-weight:500;}
-/* PIN dots 數字方框式 */
-.pin-dots{
-  display:flex;gap:10px;justify-content:center;align-items:center;
-  margin-bottom:20px;cursor:pointer;
-}
-.pin-dot{
-  width:60px;height:60px;border-radius:14px;
-  background:var(--paper-d);border:2px solid var(--border);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Noto Serif TC',serif;font-size:28px;font-weight:700;
-  color:var(--ink);transition:all .15s;
-}
-.pin-dot.filled{background:var(--gold-p);border-color:var(--gold);border-width:3px;}
-.pin-dot.cur{border-color:var(--gold);box-shadow:0 0 0 4px rgba(179,141,40,.2);}
+/* PIN input */
+#pinInput:focus{border-color:var(--gold)!important;box-shadow:0 0 0 4px rgba(179,141,40,.12);background:#fff!important;}
 /* 登入按鈕 */
 .pin-login-btn{
   width:100%;border:none;border-radius:50px;
@@ -304,7 +292,10 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
   margin-bottom:10px;
 }
 .pin-login-btn:disabled{background:#ccc;cursor:not-allowed;}
-.pin-login-btn.ready{background:var(--green);color:#fff;box-shadow:0 6px 20px rgba(46,125,79,.35);}
+.pin-login-btn.ready{
+  background:linear-gradient(135deg,#2D5D4F 0%,#1e4238 100%);
+  color:#fff;box-shadow:0 4px 15px rgba(45,93,79,.35);
+}
 .pin-login-btn.ready:active{transform:scale(.98);}
 .login-err{text-align:center;font-size:14px;color:var(--red);min-height:20px;margin-top:2px;letter-spacing:.5px;font-weight:600;}
 
@@ -433,16 +424,12 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
   <div class="login-box">
     <div class="login-title">修學打卡</div>
     <div class="login-sub">師兄，請輸入手機後四碼。</div>
-    <div class="pin-dots" onclick="focusPinInput()" style="cursor:pointer;">
-      <div class="pin-dot" id="d0"></div>
-      <div class="pin-dot" id="d1"></div>
-      <div class="pin-dot" id="d2"></div>
-      <div class="pin-dot" id="d3"></div>
-    </div>
-    <input type="tel" id="pinInput" inputmode="numeric" maxlength="4"
+    <input type="tel" id="pinInput" placeholder="••••" maxlength="4"
+      inputmode="numeric" pattern="[0-9]*"
       autocomplete="off"
-      style="position:absolute;opacity:0;width:1px;height:1px;left:-9999px;"
-      oninput="onPinInput(this)">
+      style="width:100%;padding:14px;font-size:32px;text-align:center;letter-spacing:0.4em;border:2px solid var(--border);border-radius:14px;background:var(--paper-d);color:var(--ink);font-family:'Noto Serif TC',serif;font-weight:700;outline:none;margin-bottom:16px;transition:border-color .2s;"
+      oninput="onPinInput(this)"
+      onkeydown="if(event.key==='Enter') doLoginBtn()">
     <button type="button" class="pin-login-btn" id="pinLoginBtn" onclick="doLoginBtn()" disabled>登　入</button>
     <div class="login-err" id="loginErr"></div>
   </div>
@@ -687,28 +674,16 @@ function closeDetail(){
 }
 
 // ── LOGIN ─────────────────────────────────────────────────
-function focusPinInput(){
-  const el=document.getElementById('pinInput');
-  el.focus(); el.click();
-}
 function onPinInput(el){
   let val=el.value.replace(/\D/g,'').slice(0,4);
   el.value=val; pinBuffer=val;
-  updateDots();
   document.getElementById('loginErr').textContent='';
   const btn=document.getElementById('pinLoginBtn');
   const ready=val.length===4;
   btn.disabled=!ready;
   btn.className='pin-login-btn'+(ready?' ready':'');
 }
-function updateDots(){
-  for(let i=0;i<4;i++){
-    const dot=document.getElementById('d'+i);
-    dot.textContent = pinBuffer[i]||'';
-    dot.classList.toggle('filled', i < pinBuffer.length);
-    dot.classList.toggle('cur', i === pinBuffer.length && i < 4);
-  }
-}
+function updateDots(){} // 保留空函式避免其他地方呼叫報錯
 async function doLoginBtn(){
   if(pinBuffer.length!==4) return;
   tryLogin();
@@ -794,7 +769,6 @@ function logout(){
   currentUser=null; pinBuffer='';
   const inp=document.getElementById('pinInput');
   if(inp) inp.value='';
-  updateDots();
   const btn=document.getElementById('pinLoginBtn');
   if(btn){btn.disabled=true;btn.className='pin-login-btn';}
   document.getElementById('loginOverlay').classList.add('hidden');
