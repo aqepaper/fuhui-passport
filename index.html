@@ -2,7 +2,11 @@
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1c160f">
 <title>福慧學習護照</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
@@ -17,6 +21,7 @@
   --r:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);max-width:600px;margin:0 auto;font-size:16px;}
 
@@ -897,6 +902,9 @@ async function submitRecord(){
   updateSubmitBtn();
   updateOverall();
   showToast('已提交進度 🙏');
+
+  // 提交後重新載入進度牆（同步顯示）
+  loadWall();
 
   // 非同步送 GAS（用 GET 避免 CORS）
   if(GAS_URL && GAS_URL.indexOf('YOUR_GAS')===-1){
