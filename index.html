@@ -22,16 +22,15 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html{font-size:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
-html,body{height:100%;overflow:hidden;}
-body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);max-width:600px;margin:0 auto;font-size:16px;}
+body{font-family:'Noto Sans TC',sans-serif;background:var(--paper-d);color:var(--ink);max-width:600px;margin:0 auto;font-size:16px;}
 
-.app{width:100%;height:100vh;display:flex;flex-direction:column;background:var(--paper);overflow:hidden;}
-.page{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0;}
-.page.active{display:flex;}
+.app{width:100%;background:var(--paper);}
+.page{display:none;}
+.page.active{display:block;}
 
-/* NAV */
-.bottom-nav{flex-shrink:0;background:var(--ink);border-top:3px solid var(--gold);display:flex;z-index:100;}
-.nav-btn{flex:1;padding:12px 8px 16px;background:none;border:none;color:#8a7a5a;font-family:'Noto Serif TC',serif;font-size:14px;letter-spacing:1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:color .2s;}
+/* NAV — 普通文件流，跟著內容走 */
+.bottom-nav{background:var(--ink);border-top:3px solid var(--gold);display:flex;}
+.nav-btn{flex:1;padding:14px 8px 18px;background:none;border:none;color:#8a7a5a;font-family:'Noto Serif TC',serif;font-size:14px;letter-spacing:1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:color .2s;}
 .nav-btn .ni{font-size:24px;line-height:1;}
 .nav-btn.active{color:var(--gold-l);}
 
@@ -102,11 +101,8 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 }
 
 /* MEMBER CARDS */
-.wall-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--paper-d);overscroll-behavior:contain;}
-.wall-cards{padding:12px 12px 80px;}
+.wall-scroll{background:var(--paper-d);}
 .wall-loading{text-align:center;padding:50px;color:var(--ink-l);font-family:'Noto Serif TC',serif;letter-spacing:1px;font-size:16px;}
-.app-header{background:var(--ink);padding:16px 18px 14px;border-bottom:3px solid var(--gold);}
-.group-stats{background:#fff;border-bottom:2px solid var(--border);padding:18px 16px 14px;}
 .mem-card{background:transparent;margin-bottom:10px;cursor:pointer;}
 .mem-card:active .mem-head{border-color:var(--gold);}
 .mem-head{background:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;border-radius:var(--r);border:2px solid var(--border);box-shadow:var(--shadow);transition:border-color .2s;}
@@ -167,7 +163,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 .d-wk.wdone{color:var(--green);}
 
 /* CHECKIN STICKY */
-.checkin-sticky{flex-shrink:0;background:var(--ink);border-bottom:3px solid var(--gold);padding:12px 18px;}
+.checkin-sticky{background:var(--ink);border-bottom:3px solid var(--gold);padding:12px 18px;}
 .cs-user-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
 .user-block{display:flex;align-items:center;gap:12px;}
 .user-av{width:42px;height:42px;border-radius:50%;background:var(--gold);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Noto Serif TC',serif;font-size:17px;font-weight:700;flex-shrink:0;}
@@ -188,7 +184,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 .cs-bpct.wk{color:var(--gold-p);font-size:13px;}
 
 /* ITEM CARDS */
-.checkin-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--paper-d);}
+.checkin-scroll{background:var(--paper-d);}
 .items-wrap{padding:12px 12px 4px;}
 .item-card{background:#fff;border:1px solid rgba(200,180,138,.4);border-radius:var(--r);margin-bottom:14px;overflow:hidden;box-shadow:0 2px 8px rgba(26,18,8,.05);transition:border-color .25s;}
 .item-card.done-card{border-color:var(--gold);border-width:2px;background:linear-gradient(to bottom right,#ffffff,var(--gold-p));}
@@ -272,32 +268,32 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 .footer{text-align:center;font-size:12px;color:var(--ink-l);padding:8px 16px 12px;opacity:.7;letter-spacing:1px;}
 
 /* LOGIN */
-#loginOverlay{position:fixed;inset:0;background:rgba(20,14,4,.97);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;backdrop-filter:blur(4px);}
+#loginOverlay{position:fixed;inset:0;background:rgba(20,14,4,.97);z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);}
 #loginOverlay.hidden{display:none;}
-.login-logo{font-family:'Noto Serif TC',serif;color:var(--gold-l);font-size:24px;letter-spacing:4px;margin-bottom:6px;text-align:center;font-weight:700;}
-.login-tagline{font-size:14px;color:var(--gold-p);letter-spacing:2px;opacity:.75;margin-bottom:32px;text-align:center;}
-.login-box{background:#fff;border-radius:22px;padding:30px 24px;width:100%;max-width:340px;box-shadow:0 24px 64px rgba(0,0,0,.6);}
-.login-title{font-family:'Noto Serif TC',serif;font-size:20px;text-align:center;letter-spacing:2px;margin-bottom:8px;color:var(--ink);font-weight:700;}
-.login-sub{text-align:center;font-size:15px;color:var(--ink-l);margin-bottom:22px;letter-spacing:.5px;font-weight:500;}
+.login-logo{font-family:'Noto Serif TC',serif;color:var(--gold-l);font-size:18px;letter-spacing:3px;margin-bottom:4px;text-align:center;font-weight:700;}
+.login-tagline{font-size:12px;color:var(--gold-p);letter-spacing:2px;opacity:.7;margin-bottom:18px;text-align:center;}
+.login-box{background:#fff;border-radius:18px;padding:22px 20px;width:100%;max-width:320px;box-shadow:0 16px 48px rgba(0,0,0,.6);}
+.login-title{font-family:'Noto Serif TC',serif;font-size:16px;text-align:center;letter-spacing:2px;margin-bottom:5px;color:var(--ink);font-weight:700;}
+.login-sub{text-align:center;font-size:13px;color:var(--ink-l);margin-bottom:14px;font-weight:500;}
 /* PIN input */
-#pinInput:focus{border-color:var(--gold)!important;box-shadow:0 0 0 4px rgba(179,141,40,.12);background:#fff!important;}
+#pinInput:focus{border-color:var(--gold)!important;box-shadow:0 0 0 3px rgba(179,141,40,.12);background:#fff!important;}
 /* 登入按鈕 */
 .pin-login-btn{
   width:100%;border:none;border-radius:50px;
-  padding:18px;
-  font-family:'Noto Serif TC',serif;font-size:18px;
-  letter-spacing:6px;font-weight:700;
+  padding:14px;
+  font-family:'Noto Serif TC',serif;font-size:16px;
+  letter-spacing:4px;font-weight:700;
   cursor:pointer;transition:all .2s;
   background:#ccc;color:#fff;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 .pin-login-btn:disabled{background:#ccc;cursor:not-allowed;}
 .pin-login-btn.ready{
   background:linear-gradient(135deg,#2D5D4F 0%,#1e4238 100%);
-  color:#fff;box-shadow:0 4px 15px rgba(45,93,79,.35);
+  color:#fff;box-shadow:0 4px 12px rgba(45,93,79,.35);
 }
 .pin-login-btn.ready:active{transform:scale(.98);}
-.login-err{text-align:center;font-size:14px;color:var(--red);min-height:20px;margin-top:2px;letter-spacing:.5px;font-weight:600;}
+.login-err{text-align:center;font-size:13px;color:var(--red);min-height:18px;margin-top:2px;letter-spacing:.5px;font-weight:600;}
 
 /* TOAST */
 .toast{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-12px);background:var(--ink);color:var(--gold-l);font-family:'Noto Serif TC',serif;font-size:15px;letter-spacing:2px;padding:13px 28px;border-radius:30px;border:2px solid var(--gold);opacity:0;pointer-events:none;transition:all .3s;white-space:nowrap;z-index:600;max-width:90%;font-weight:700;}
@@ -308,7 +304,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
 <div class="app">
 
   <!-- PAGE 1: 功德榜 -->
-  <div id="pageWall" class="page active">
+  <div id="pageWall" class="page" style="display:block">
     <div class="wall-scroll" id="wallScroll">
       <!-- 標題 -->
       <div class="app-header">
@@ -407,15 +403,43 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
       <div class="submit-wrap">
         <button type="button" class="submit-btn" id="submitBtn" onclick="submitRecord()" disabled>提交進度</button>
       </div>
-      <div class="footer">每週日 23:59 自動結算 · AQE @ 2026</div>
+      <div class="footer">
+        每週日 23:59 自動結算 · AQE @ 2026
+        <br>
+        <button type="button" onclick="clearLocalData()" style="
+          margin-top:10px;background:none;border:1px solid var(--border);
+          color:var(--ink-l);font-size:11px;padding:5px 14px;
+          border-radius:20px;cursor:pointer;letter-spacing:1px;
+          font-family:'Noto Serif TC',serif;
+        ">清除本機暫存資料</button>
+      </div>
     </div>
   </div>
 
-  <nav class="bottom-nav">
-    <button class="nav-btn active" id="navWall" onclick="showPage('wall')"><span class="ni">🏛</span>功德榜</button>
-    <button class="nav-btn" id="navCheckin" onclick="showPage('checkin')"><span class="ni">✏️</span>修學打卡</button>
-  </nav>
 </div>
+
+<!-- 浮動打卡按鈕（功德榜頁顯示） -->
+<button id="fabCheckin" onclick="showPage('checkin')" style="
+  position:fixed;bottom:28px;right:20px;
+  width:62px;height:62px;border-radius:50%;
+  background:var(--gold);color:#fff;border:none;
+  font-size:26px;cursor:pointer;
+  box-shadow:0 4px 20px rgba(179,141,40,.5);
+  display:flex;align-items:center;justify-content:center;
+  z-index:200;transition:transform .15s,box-shadow .15s;
+" title="修學打卡">✏️</button>
+
+<!-- 浮動返回按鈕（打卡頁顯示） -->
+<button id="fabBack" onclick="showPage('wall')" style="
+  position:fixed;bottom:28px;left:20px;
+  height:44px;padding:0 18px;border-radius:50px;
+  background:var(--ink);color:var(--gold-l);border:2px solid var(--gold);
+  font-size:13px;font-family:'Noto Serif TC',serif;
+  font-weight:600;letter-spacing:1px;cursor:pointer;
+  box-shadow:0 4px 16px rgba(28,22,15,.4);
+  display:none;align-items:center;justify-content:center;gap:6px;
+  z-index:200;
+">← 功德榜</button>
 
 <!-- Login -->
 <div id="loginOverlay" class="hidden">
@@ -427,7 +451,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:#f5f0e8;color:var(--ink);m
     <input type="tel" id="pinInput" placeholder="••••" maxlength="4"
       inputmode="numeric" pattern="[0-9]*"
       autocomplete="off"
-      style="width:100%;padding:14px;font-size:32px;text-align:center;letter-spacing:0.4em;border:2px solid var(--border);border-radius:14px;background:var(--paper-d);color:var(--ink);font-family:'Noto Serif TC',serif;font-weight:700;outline:none;margin-bottom:16px;transition:border-color .2s;"
+      style="width:100%;padding:12px;font-size:26px;text-align:center;letter-spacing:0.4em;border:2px solid var(--border);border-radius:12px;background:var(--paper-d);color:var(--ink);font-family:'Noto Serif TC',serif;font-weight:700;outline:none;margin-bottom:14px;transition:border-color .2s;"
       oninput="onPinInput(this)"
       onkeydown="if(event.key==='Enter') doLoginBtn()">
     <button type="button" class="pin-login-btn" id="pinLoginBtn" onclick="doLoginBtn()" disabled>登　入</button>
@@ -510,17 +534,31 @@ let wallMembers=[];
 
 // ── PAGE NAV ─────────────────────────────────────────────
 function showPage(p){
-  document.getElementById('pageWall').classList.toggle('active',p==='wall');
-  document.getElementById('pageDetail').classList.toggle('active',p==='detail');
-  document.getElementById('pageCheckin').classList.toggle('active',p==='checkin');
-  document.getElementById('navWall').classList.toggle('active',p==='wall');
-  document.getElementById('navCheckin').classList.toggle('active',p==='checkin');
-  if(p==='checkin'&&!currentUser) document.getElementById('loginOverlay').classList.remove('hidden');
+  ['pageWall','pageDetail','pageCheckin'].forEach(id=>{
+    document.getElementById(id).style.display='none';
+  });
+  const target = p==='wall'?'pageWall': p==='detail'?'pageDetail':'pageCheckin';
+  document.getElementById(target).style.display='block';
+  window.scrollTo(0,0);
+
+  // 浮動按鈕
+  const fab  = document.getElementById('fabCheckin');
+  const back = document.getElementById('fabBack');
+  if(fab)  fab.style.display  = (p==='wall') ? 'flex' : 'none';
+  if(back) back.style.display = (p==='checkin') ? 'flex' : 'none';
+
+  if(p==='checkin'&&!currentUser){
+    document.getElementById('loginOverlay').classList.remove('hidden');
+  } else {
+    document.getElementById('loginOverlay').classList.add('hidden');
+  }
 }
 
 // ── WALL ─────────────────────────────────────────────────
 function initWall(){
   document.getElementById('wallWeekChip').textContent='第 '+WEEK+' 週';
+  const fab=document.getElementById('fabCheckin');
+  if(fab) fab.style.display='flex';
   loadWall();
 }
 
@@ -912,6 +950,23 @@ function updateSubmitBtn(){
   btn.disabled=!canSubmit;
   btn.className='submit-btn'+(canSubmit?' active':'');
   btn.textContent = isSyncing ? '同步中…' : '提交進度';
+}
+
+function clearLocalData(){
+  if(!confirm('確定清除本機暫存資料？\n（雲端資料不受影響）')) return;
+  // 清除所有 fuhui_ 開頭的 localStorage
+  const keys=[];
+  for(let i=0;i<localStorage.length;i++){
+    if(localStorage.key(i).startsWith('fuhui_')) keys.push(localStorage.key(i));
+  }
+  keys.forEach(k=>localStorage.removeItem(k));
+  // 重置畫面
+  weekAccum={}; cumTotals={};
+  CI.forEach(it=>{ selections[it.key]=null; noteTexts[it.key]=''; });
+  buildCheckin();
+  CI.forEach(it=>refreshCard(it.key));
+  updateOverall(); updateSubmitBtn();
+  showToast('本機暫存已清除 ✓');
 }
 
 // ── SUBMIT ────────────────────────────────────────────────
