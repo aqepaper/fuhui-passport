@@ -56,6 +56,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--paper-d);color:var(-
 .ms-lbl{font-size:11px;color:var(--gold-p);opacity:.7;line-height:1.2;font-weight:500;}
 .ms-lbl.done{color:var(--gold-l);opacity:1;font-weight:700;}
 .ms-sep{width:16px;height:1px;background:rgba(212,170,74,.3);flex-shrink:0;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(196,154,46,.4);}50%{box-shadow:0 0 0 6px rgba(196,154,46,0);}}
 
 /* GROUP RING */
 .group-stats{flex-shrink:0;background:#fff;border-bottom:2px solid var(--border);padding:18px 16px 14px;}
@@ -147,19 +148,19 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--paper-d);color:var(-
 .sec-tag{font-size:11px;padding:2px 8px;border-radius:8px;color:#fff;font-weight:600;}
 .sec-tag.c{background:var(--green);}
 .sec-tag.a{background:var(--ink-l);}
-.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);}
+.d-grid{display:flex;flex-direction:column;gap:2px;background:var(--border);}
 .d-cell{background:#fff;padding:14px 16px;}
-.d-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.d-name{font-size:14px;color:var(--ink-m);font-weight:600;}
-.d-pct{font-size:15px;font-weight:700;color:var(--gold);}
+.d-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
+.d-name{font-size:15px;color:var(--ink-m);font-weight:600;}
+.d-pct{font-size:17px;font-weight:700;color:var(--gold);}
 .d-pct.full{color:var(--green);}
 .d-pct.adm{color:var(--ink-l);}
-.d-bar{height:7px;background:var(--paper-d);border-radius:4px;overflow:hidden;margin-bottom:5px;}
+.d-bar{height:9px;background:var(--paper-d);border-radius:4px;overflow:hidden;margin-bottom:7px;}
 .d-bfill{height:100%;background:var(--gold-l);border-radius:4px;}
 .d-bfill.full{background:var(--green);}
 .d-bfill.adm{background:#bbb;}
-.d-count{font-size:12px;color:var(--ink-l);font-weight:500;}
-.d-wk{font-size:11px;color:var(--gold);margin-top:3px;font-weight:600;}
+.d-count{font-size:13px;color:var(--ink-l);font-weight:500;}
+.d-wk{font-size:12px;color:var(--gold);margin-top:4px;font-weight:600;}
 .d-wk.wdone{color:var(--green);}
 
 /* CHECKIN STICKY */
@@ -637,7 +638,6 @@ function showDetail(idx){
   const m=wallMembers[idx],tot=m.totals||{},wt=m.weekTotals||{};
   const cp=cumPct(tot),wp=wkPct(wt);
   const dh=m.dharma||m.name;
-  const WGOALS={sutra:2,dharma:1,vow:3,reflect:3,sit:2};
   document.getElementById('detailAv').textContent=dh[dh.length-1];
   document.getElementById('detailName').textContent=m.name;
   document.getElementById('detailDharma').textContent='法名：'+(m.dharma||'');
@@ -648,7 +648,7 @@ function showDetail(idx){
   const cg=document.getElementById('detailCheckinGrid'); cg.innerHTML='';
   CI.forEach(it=>{
     const got=tot[it.key]||0,p=Math.min(100,Math.round(got/it.yg*100));
-    const wGot=wt[it.key]||0,wP=Math.round(wGot/WGOALS[it.key]*100);
+    const wGot=wt[it.key]||0,wP=Math.round(wGot/it.wg*100);
     const c=document.createElement('div'); c.className='d-cell';
     c.innerHTML=`<div class="d-top"><span class="d-name">${it.icon} ${it.name}</span><span class="d-pct ${p>=100?'full':''}">${p}%</span></div>
     <div class="d-bar"><div class="d-bfill ${p>=100?'full':''}" style="width:${p}%"></div></div>
@@ -667,9 +667,17 @@ function showDetail(idx){
     ag.appendChild(c);
   });
 
-  document.getElementById('pageDetail').classList.add('active');
-  document.getElementById('pageWall').classList.remove('active');
+  // 統一用 style.display 切換頁面，確保立刻出現
+  document.getElementById('pageWall').style.display='none';
+  document.getElementById('pageCheckin').style.display='none';
+  document.getElementById('pageDetail').style.display='block';
+  window.scrollTo(0,0);
   document.getElementById('pageDetail').querySelector('.detail-scroll').scrollTop=0;
+  // FAB 控制
+  const fabD=document.getElementById('fabCheckin');
+  const backD=document.getElementById('fabBack');
+  if(fabD) fabD.style.display='none';
+  if(backD) backD.style.display='none';
 
   // 載入備註記錄
   const notesWrap=document.getElementById('detailNotes');
@@ -707,8 +715,11 @@ async function loadNotes(pin, wrap){
 }
 
 function closeDetail(){
-  document.getElementById('pageDetail').classList.remove('active');
-  document.getElementById('pageWall').classList.add('active');
+  document.getElementById('pageDetail').style.display='none';
+  document.getElementById('pageWall').style.display='block';
+  window.scrollTo(0,0);
+  const fab=document.getElementById('fabCheckin');
+  if(fab) fab.style.display='flex';
 }
 
 // ── LOGIN ─────────────────────────────────────────────────
