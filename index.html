@@ -362,7 +362,7 @@ body{font-family:'Noto Sans TC',sans-serif;background:var(--paper-d);color:var(-
       <div class="d-grid" id="detailAdminGrid"></div>
       <div class="sec-title"><span class="sec-tag" style="background:#7a6a4a">修學備註</span>法語・反省記錄</div>
       <div id="detailNotes" class="notes-wrap"></div>
-      <div style="height:20px"></div>
+      <div style="height:80px"></div>
     </div>
   </div>
 
@@ -677,7 +677,7 @@ function showDetail(idx){
   const fabD=document.getElementById('fabCheckin');
   const backD=document.getElementById('fabBack');
   if(fabD) fabD.style.display='none';
-  if(backD) backD.style.display='none';
+  if(backD) backD.style.display='flex';
 
   // 載入備註記錄
   const notesWrap=document.getElementById('detailNotes');
