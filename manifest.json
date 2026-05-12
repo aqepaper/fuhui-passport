@@ -1,0 +1,33 @@
+{
+  "name": "福慧學習護照",
+  "short_name": "福慧護照",
+  "id": "/fuhui-passport/",
+  "start_url": "/fuhui-passport/?source=pwa",
+  "scope": "/fuhui-passport/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#1c160f",
+  "background_color": "#1c160f",
+  "description": "佛法學習紀錄系統，追蹤誦經、發願、聞法、反省、靜坐等修行進度",
+  "lang": "zh-TW",
+  "icons": [
+    {
+      "src": "/fuhui-passport/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/fuhui-passport/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/fuhui-passport/maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

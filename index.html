@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1c160f">
+<link rel="manifest" href="/fuhui-passport/manifest.json">
 <title>福慧學習護照</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap');
@@ -1047,6 +1048,13 @@ function showToast(msg){
 }
 
 initWall();
+
+// 註冊 Service Worker（PWA 可安裝必要條件）
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/fuhui-passport/sw.js').catch(err => {
+    console.log('SW 註冊失敗:', err);
+  });
+}
 </script>
 </body>
 </html>
